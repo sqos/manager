@@ -84,6 +84,16 @@ func (c *Manager) GetAll() (entries []Entry) {
 	return entries
 }
 
+func (c *Manager) Traverse(handler func(e interface{})) {
+	if handler == nil {
+		return
+	}
+	c.Map.Range(func(k, v interface{}) bool {
+		handler(v)
+		return true
+	})
+}
+
 func (c *Manager) update(e Entry) bool {
 	if old := c.Get(e.Key()); old == nil {
 		return false
@@ -152,6 +162,10 @@ func Get(key interface{}) Entry {
 
 func GetAll() (entries []Entry) {
 	return Default.GetAll()
+}
+
+func Traverse(handler func(e interface{})) {
+	Default.Traverse(handler)
 }
 
 func Update(e Entry) bool {

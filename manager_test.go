@@ -100,3 +100,22 @@ func TestDelete(t *testing.T) {
 		t.Log("Delete:", o)
 	}
 }
+
+func TestTraverse(t *testing.T) {
+	for _, e := range tests {
+		Add(e)
+		t.Log("Get:", Get(e.Key()))
+	}
+	var entries []*EntryTester
+	Traverse(func(v interface{}) {
+		if v == nil {
+			return
+		}
+		if e, ok := v.(*EntryTester); ok {
+			entries = append(entries, e)
+		}
+	})
+	for _, e := range entries {
+		t.Log(e)
+	}
+}
