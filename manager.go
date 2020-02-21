@@ -84,7 +84,7 @@ func (c *Manager) GetAll() (entries []Entry) {
 	return entries
 }
 
-func (c *Manager) Traverse(handler func(e interface{})) {
+func (c *Manager) Traverse(handler func(e interface{}), Sort ...func()) {
 	if handler == nil {
 		return
 	}
@@ -92,6 +92,9 @@ func (c *Manager) Traverse(handler func(e interface{})) {
 		handler(v)
 		return true
 	})
+	if len(Sort) > 0 && Sort[0] != nil {
+		Sort[0]()
+	}
 }
 
 func (c *Manager) update(e Entry) bool {
