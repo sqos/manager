@@ -102,8 +102,8 @@ func (c *Manager) update(e Entry) bool {
 		return false
 	} else {
 		old.Copy(e)
-		e.UpdateAfter()
-		c.notifyOperate(e, NotifyUpdate)
+		old.UpdateAfter()
+		c.notifyOperate(old, NotifyUpdate)
 		return true
 	}
 }
